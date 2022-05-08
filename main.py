@@ -2,7 +2,7 @@ import telebot
 import data.tags as dt
 import requests 
 from telebot import types
-from wikis import neerc, emaxx
+from wikis import neerc, emaxx, stack
 from lib.struct import *
 from bs4 import BeautifulSoup as bs
 
@@ -24,46 +24,42 @@ def start(m, res=False):
     bot.send_message(m.chat.id, "Поиск ошибок:{}".format(thebestplace), parse_mode='HTML', reply_markup=example_keyboard())
 
 
-@bot.message_handler(commands=['neerc'])
-def neerc_handler(message):
-    msg = message.text.lower()[7:]
+@bot.message_handler(commands=['neerc', 'emaxx', 'algocode', 'stack'])
+def wiki_handler(message):
+    wiki, msg = message.text.lower().split(" ", 1)
+    wiki = wiki[1:]
     if(len(msg) == 0):
         return
     try:
-        q = neerc.query_list(msg)
+        if wiki == 'neerc':
+            q = neerc.query_list(msg)
+        elif wiki == 'emaxx':
+            q = emaxx.query_list(msg)
+        elif wiki == 'stack':
+            q = stack.query_list(msg)
+        else:
+            bot.send_message(message.chat.id, 'Algocode пока недоступен.')
+            return  
     except:
         bot.send_message(message.chat.id, 'Неизвестная ошибка. Пожалуйста, переформулируйте запрос.')  
         return
-    algo_handler(q, message)
+    queries_handler(q, message)
 
-@bot.message_handler(commands=['emaxx'])
-def emaxx_handler(message):
-    msg = message.text.lower()[7:]
-    if(len(msg) == 0):
-        return
-    try:    
-        q = emaxx.query_list(msg)
-    except:
-        bot.send_message(message.chat.id, 'Неизвестная ошибка. Пожалуйста, переформулируйте запрос.') 
-        return
-    algo_handler(q, message)
-
-@bot.message_handler(commands=['algocode'])
-def emaxx_handler(message):
-    bot.send_message(message.chat.id, 'AlgocodeWiki пока не доступен.') 
-
-def algo_handler(queries, message):
+def queries_handler(queries, message):
     try:
         if(len(queries) == 0):
             bot.send_message(message.chat.id, 'По данному запросу ничего не найдено.')
             return
         bot.send_message(message.chat.id, "Найдено {} статья(-ей):\n".format(str(len(queries))))
+        queries.sort(reverse=True)
         msg = ""
+        index = 1
         for result in queries:
             for c in dt.special:
                 result.name = result.name.replace(c, "\\" + c)
                 result.ref = result.ref.replace(c, "\\" + c)
-            msg += "[" + result.name + "](" + result.ref + ")\n"
+            msg += str(index) + "\. [" + result.name + "](" + result.ref + ")" + " _Рейтинг:_ *" + str(result.priority if result.priority != 0 else "Не определен") + "*\n"
+            index += 1
         bot.send_message(message.chat.id,  msg, parse_mode='MarkdownV2')
         queries[0].preview = queries[0].preview.replace("[math]", "")
         queries[0].preview = queries[0].preview.replace("[/math]", "")
@@ -72,6 +68,6 @@ def algo_handler(queries, message):
         except:
             pass
     except:
-        bot.send_message(message.chat.id, 'Неизвестная ошибка. Пожалуйста, переформулируйте запрос.')
+       bot.send_message(message.chat.id, 'Неизвестная ошибка. Пожалуйста, переформулируйте запрос.')
 
 bot.polling(none_stop=True, interval=0)
