@@ -1,9 +1,11 @@
 # mipt-algo-bot
 
+https://t.me/MIPTAlgoBot
+
 ## Обзор
 
 С помощью этого бота вы cможете найти алгоритм или страницу stackoverflow по ошибке.
-Бот собирается в контейнер и имеет репозиторий на 'https://hub.docker.com/repository/docker/zykovta/algobot'
+Бот собирается в контейнер и имеет [репозиторий]('https://hub.docker.com/repository/docker/zykovta/algobot') на docker hub.
 
 ## Build
 
