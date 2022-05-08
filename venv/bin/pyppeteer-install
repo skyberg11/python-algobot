@@ -1,4 +1,4 @@
-#!/home/skyberg/vscode/mipt/python-pract/algobot/python-algobot/venv/bin/python3
+#!/home/skyberg/vscode/mipt/python-pract/algobot/python-algobot/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
