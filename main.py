@@ -6,16 +6,19 @@ from wikis import neerc, emaxx, stack
 from lib.struct import *
 from bs4 import BeautifulSoup as bs
 
+
 bot = telebot.TeleBot('5318640274:AAFpFNYsF-Xq3hpBSvUXerQUZ3yMKWHR9n0')
 
-wikis = "\n<b>/neerc</b>\n<b>/algocode</b>\n<b>/emaxx</b>"
+wikis = "\n<b>/neerc</b>\n<b>/emaxx</b>"
 thebestplace = "\n<b>/stack</b>"
+
 
 def example_keyboard():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add(types.KeyboardButton("/neerc быстрая сортировка"))
     markup.add(types.KeyboardButton("/stack stackoverflow"))
     return markup
+
 
 @bot.message_handler(commands=["start", "help"])
 def start(m, res=False):    
@@ -24,7 +27,7 @@ def start(m, res=False):
     bot.send_message(m.chat.id, "Поиск ошибок:{}".format(thebestplace), parse_mode='HTML', reply_markup=example_keyboard())
 
 
-@bot.message_handler(commands=['neerc', 'emaxx', 'algocode', 'stack'])
+@bot.message_handler(commands=['neerc', 'emaxx', 'stack'])
 def wiki_handler(message):
     wiki, msg = message.text.lower().split(" ", 1)
     wiki = wiki[1:]
@@ -38,12 +41,13 @@ def wiki_handler(message):
         elif wiki == 'stack':
             q = stack.query_list(msg)
         else:
-            bot.send_message(message.chat.id, 'Algocode пока недоступен.')
+            bot.send_message(message.chat.id, 'Неизвестная команда.')
             return  
     except:
         bot.send_message(message.chat.id, 'Неизвестная ошибка. Пожалуйста, переформулируйте запрос.')  
         return
     queries_handler(q, message)
+
 
 def queries_handler(queries, message):
     try:

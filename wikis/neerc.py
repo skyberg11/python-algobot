@@ -1,7 +1,6 @@
 import requests as rq
 from lib.struct import *
 from bs4 import BeautifulSoup as bs
-import pandas as pd
 
 def query_list(word : str):
     q = []

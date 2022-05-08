@@ -1,9 +1,8 @@
 from lib.struct import *
-import requests as rq
 import urllib
-import pandas as pd
 from requests_html import HTML
 from requests_html import HTMLSession
+
 
 def handle_response(response):
     css_identifier_result = ".tF2Cxc"
@@ -21,6 +20,7 @@ def handle_response(response):
                     result.find(css_identifier_link, first=True).attrs['href'],
                     result.find(css_identifier_text, first=True).text))
     return q
+
 
 def query_list(word : str):
     query = urllib.parse.quote_plus(word)
