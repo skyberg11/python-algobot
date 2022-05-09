@@ -1,14 +1,16 @@
 import requests as rq
+import data.settings as urls
 from lib.struct import *
 from bs4 import BeautifulSoup as bs
 
+
 def query_list(word : str):
     q = []
-    url = "http://neerc.ifmo.ru/wiki/index.php?search=" + word + "&title=Служебная%3AПоиск&profile=default&fulltext=1"
+    url = urls.NEERC_URL + word
     request = rq.get(url)
     soup = bs(request.text, "html.parser")
     lists = soup.find_all('ul', class_='mw-search-results')
-    if(len(lists) == 0):
+    if not lists:
         return q
     search_results = lists[0].find_all('div', class_='mw-search-result-heading')
     for result in search_results:

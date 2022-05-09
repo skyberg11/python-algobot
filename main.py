@@ -1,13 +1,14 @@
 import telebot
 import data.tags as dt
 import requests 
+import data.settings
 from telebot import types
 from wikis import neerc, emaxx, stack
 from lib.struct import *
 from bs4 import BeautifulSoup as bs
 
 
-bot = telebot.TeleBot('5318640274:AAFpFNYsF-Xq3hpBSvUXerQUZ3yMKWHR9n0')
+bot = telebot.TeleBot(data.settings.BOT_TOKEN)
 
 wikis = "\n<b>/neerc</b>\n<b>/emaxx</b>"
 thebestplace = "\n<b>/stack</b>"
@@ -29,10 +30,10 @@ def start(m, res=False):
 
 @bot.message_handler(commands=['neerc', 'emaxx', 'stack'])
 def wiki_handler(message):
+    if len(message.text.split()) == 1:
+        return
     wiki, msg = message.text.lower().split(" ", 1)
     wiki = wiki[1:]
-    if(len(msg) == 0):
-        return
     try:
         if wiki == 'neerc':
             q = neerc.query_list(msg)
@@ -51,7 +52,7 @@ def wiki_handler(message):
 
 def queries_handler(queries, message):
     try:
-        if(len(queries) == 0):
+        if not queries:
             bot.send_message(message.chat.id, 'По данному запросу ничего не найдено.')
             return
         bot.send_message(message.chat.id, "Найдено {} статья(-ей):\n".format(str(len(queries))))
@@ -59,9 +60,9 @@ def queries_handler(queries, message):
         msg = ""
         index = 1
         for result in queries:
-            for c in dt.special:
-                result.name = result.name.replace(c, "\\" + c)
-                result.ref = result.ref.replace(c, "\\" + c)
+            for ch in dt.special:
+                result.name = result.name.replace(ch, "\\" + ch)
+                result.ref = result.ref.replace(ch, "\\" + ch)
             msg += str(index) + "\. [" + result.name + "](" + result.ref + ")" + " _Рейтинг:_ *" + str(result.priority if result.priority != 0 else "Не определен") + "*\n"
             index += 1
         bot.send_message(message.chat.id,  msg, parse_mode='MarkdownV2')

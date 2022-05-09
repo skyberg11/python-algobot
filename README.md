@@ -36,3 +36,8 @@ https://t.me/MIPTAlgoBot
   ```
   deactivate
   ```
+
+### Скриншоты
+
+<img src="screenshots/example.png" width="200" height="50"/>
+<img src="screenshots/example2.png" width="200" height="50"/>

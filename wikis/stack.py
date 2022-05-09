@@ -1,16 +1,17 @@
 import requests as rq
+import data.settings as urls
 from lib.struct import *
 from bs4 import BeautifulSoup as bs
 
 
 def query_list(word : str):
     q = []
-    url = "https://stackoverflow.com/search?tab=votes&q=" + word
+    url = urls.STACK_URL + word
     request = rq.get(url)
     soup = bs(request.text, "html.parser")
     lists = soup.find_all('div', class_='js-search-results')
     votes = soup.find_all('span', class_="vote-count-post")
-    if(len(lists) == 0):
+    if not lists:
         return q
     search_results = lists[0].find_all('div', class_='search-result')
     for result, vote_count in zip(search_results, votes):

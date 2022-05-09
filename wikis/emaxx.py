@@ -1,5 +1,6 @@
-from lib.struct import *
 import urllib
+import data.settings as urls
+from lib.struct import *
 from requests_html import HTML
 from requests_html import HTMLSession
 
@@ -25,7 +26,7 @@ def handle_response(response):
 def query_list(word : str):
     query = urllib.parse.quote_plus(word)
     session = HTMLSession()
-    response = session.get("https://www.google.ru/search?q=site:e-maxx.ru+" + query)
+    response = session.get(urls.EMAXX_URL + query)
     q = handle_response(response)
     return q
 
