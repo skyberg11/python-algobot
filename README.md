@@ -39,5 +39,5 @@ https://t.me/MIPTAlgoBot
 
 ### Скриншоты
 
-<img src="screenshots/example.png" width="200" height="50"/>
-<img src="screenshots/example2.png" width="200" height="50"/>
+<img src="screenshots/example.png" width="711" height="455"/>
+<img src="screenshots/example2.png" width="711" height="455"/>
