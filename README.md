@@ -1,4 +1,4 @@
-# mipt-algo-bot
+# mipt-flowchart-bot
 
 https://t.me/MIPTAlgoBot
 
@@ -6,7 +6,7 @@ https://t.me/MIPTAlgoBot
 
 С помощью этого бота вы cможете найти алгоритм или страницу stackoverflow по ошибке.
 Бот собирается в контейнер и имеет [репозиторий](https://hub.docker.com/repository/docker/zykovta/algobot) на docker hub.
-
+При парсинге со stackoverflow бот может упираться в капчу. Тогда нужно зайти на сайт и просто пройти капчу за него.
 ## Build
 
 Инструкции ниже собирают и запускают бота локально на `virtual environment`
