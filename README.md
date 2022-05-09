@@ -1,4 +1,4 @@
-# mipt-algo-bot
+# mipt-flowchart-bot
 
 https://t.me/MIPTAlgoBot
 
