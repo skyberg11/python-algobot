@@ -1,2 +1,2 @@
-# python-algobot
+# python-bot
 С помощью этого бота вы cможете найти алгоритм или страницу stackoverflow по ошибке
