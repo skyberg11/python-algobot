@@ -7,5 +7,9 @@ class query:
     
     def show(self):
         print(self.name)
+
+    def __lt__(self, other):
+        return self.priority < other.priority
     
-    
+    def __eq__(self, other):
+        return self.priority == other.priority
